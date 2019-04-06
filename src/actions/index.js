@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import jsonPlaceHolder from '../api/jsonPlaceHolder'
 
 export const fetchPosts = () =>
@@ -10,11 +11,14 @@ export const fetchPosts = () =>
     })
   }
 
-  export const fetchUser = (id) => async dispatch => {
-      const res = await jsonPlaceHolder.get(`/users/${id}`)
+   export const fetchUser = (id) => dispatch => _fetchUser(id, dispatch)
 
-      dispatch({
-        type: 'FETCH_USER',
-        payload: res.data
-      })
-    }
+
+     const _fetchUser = _.memoize(async (id, dispatch) => {
+       const res = await jsonPlaceHolder.get(`/users/${id}`)
+
+       dispatch({
+         type: 'FETCH_USER',
+         payload: res.data
+       })
+     })
