@@ -6,6 +6,6 @@ export const fetchPosts = () =>
 
     dispatch({
       type: 'FETCH_POST',
-      payload: res
+      payload: res.data
     })
   }
