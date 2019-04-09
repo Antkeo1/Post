@@ -4,10 +4,16 @@ import jsonPlaceHolder from '../api/jsonPlaceHolder'
 // getState is a function inside redux that gives us access to all the data
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   await dispatch(fetchPosts())
-  // using lodash map function we will map thru all post and get the unique userId
-  // _.uniq gives us the unique userId
-  const userIds = _.uniq(_.map(getState().posts, 'userId'))
-  userIds.forEach(id => dispatch(fetchUser(id)))
+// using lodash map function we will map thru all post and get the unique userId
+// .uniq gives us the unique userId
+// chain is a function inside lodash tht aloows us to chain additonal function
+// that we will minpulate
+// .value() tells chain function to run the listed function
+  _.chain(getState().post)
+    .map('userId')
+    .uniq()
+    .forEach(id => dispatch(fetchUser(id)))
+    .value()
 }
 
 // fetchpost api call
